@@ -315,16 +315,14 @@ def merge_datasets(sba_df, bds_df, cbp_df, fred_df):
 # -------------------------------
 if __name__ == "__main__":
     
-    # 1. DEFINE SCOPE (2020 - 2024)
-    min_year = 2020
-    max_year = 2024
+    # 1. DEFINE SCOPE (2005 - 2025)
+    min_year = 2005
+    max_year = 2025
     print(f"--- Starting Pipeline for {min_year}-{max_year} ---")
 
     # 2. LOAD ONLY RELEVANT SBA DATA
     # We only need the file covering 2020-Present to save time/memory
-    relevant_files = [
-        "foia-7a-fy2020-present-asof-250930_sample.csv"
-    ]
+    relevant_files = csv_files
     
     sba_df = load_sba_7a_sample(relevant_files, sample_size=5000) # Increased sample size
     
