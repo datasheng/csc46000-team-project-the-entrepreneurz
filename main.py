@@ -1,16 +1,47 @@
+import os
 import requests
 import pandas as pd
 from sqlalchemy import create_engine, text
+from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
+# -------------------------------
+# CONFIGURATION & MAPPINGS
+# -------------------------------
+STATE_TO_FIPS = {
+    'AL': '01', 'AK': '02', 'AZ': '04', 'AR': '05', 'CA': '06', 'CO': '08',
+    'CT': '09', 'DE': '10', 'FL': '12', 'GA': '13', 'HI': '15', 'ID': '16',
+    'IL': '17', 'IN': '18', 'IA': '19', 'KS': '20', 'KY': '21', 'LA': '22',
+    'ME': '23', 'MD': '24', 'MA': '25', 'MI': '26', 'MN': '27', 'MS': '28',
+    'MO': '29', 'MT': '30', 'NE': '31', 'NV': '32', 'NH': '33', 'NJ': '34',
+    'NM': '35', 'NY': '36', 'NC': '37', 'ND': '38', 'OH': '39', 'OK': '40',
+    'OR': '41', 'PA': '42', 'RI': '44', 'SC': '45', 'SD': '46', 'TN': '47',
+    'TX': '48', 'UT': '49', 'VT': '50', 'VA': '51', 'WA': '53', 'WV': '54',
+    'WI': '55', 'WY': '56', 'DC': '11'
+}
 
 # -------------------------------
-# PostgreSQL connection
+# DATABASE CONNECTION
 # -------------------------------
-engine = create_engine("postgresql://postgres:password@localhost:5432/Entrepreneur")
+DB_USER = getenv('user', 'postgres')
+DB_PASSWORD = getenv('password', 'your_password')
+DB_HOST = getenv('host', 'your-db-instance.rds.amazonaws.com')
+DB_PORT = getenv('port', '5432')
+DB_NAME = getenv('database', 'postgres')
+CENSUS_API_KEY = getenv('census_api_key', 'your_census_api_key').strip()
+FRED_API_KEY = getenv('fred_api_key', 'your_fred_api_key').strip()
+
+connection_str = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+try:
+    engine = create_engine(connection_str)
+except Exception as e:
+    print(f"Warning: Database engine could not be created. {e}")
+    engine = None
 
 # -------------------------------
-# SBA 7(a) Loader (sample)
+# 1. SBA 7(a) LOADER & CLEANER
 # -------------------------------
-
 csv_files = [
     "foia-7a-fy1991-fy1999-asof-250930_sample.csv",
     "foia-7a-fy2000-fy2009-asof-250930_sample.csv",
@@ -18,236 +49,330 @@ csv_files = [
     "foia-7a-fy2020-present-asof-250930_sample.csv"
 ]
 
-
 def load_sba_7a_sample(csv_files, sample_size=500):
     dfs = []
     for file in csv_files:
-        print(f"Loading first {sample_size} rows from {file}...")
-        df = pd.read_csv(file, nrows=sample_size, low_memory=False)
-        dfs.append(df)
+        if os.path.exists(file):
+            print(f"Loading first {sample_size} rows from {file}...")
+            # encoding='latin1' is often safer for government CSVs
+            df = pd.read_csv(file, nrows=sample_size, encoding='latin1', low_memory=False)
+            dfs.append(df)
+        else:
+            print(f"Warning: File {file} not found. Skipping.")
+    
+    if not dfs:
+        return pd.DataFrame()
+        
     sba_sample_df = pd.concat(dfs, ignore_index=True)
-    print(f"Loaded {len(sba_sample_df)} rows.")
+    print(f"Loaded {len(sba_sample_df)} total SBA rows.")
     return sba_sample_df
 
-# -------------------------------
-# SBA 7(a) Cleaning
-# -------------------------------
 def clean_sba(df):
     print("Cleaning SBA 7(a) data...")
+    df.columns = [c.lower().replace(" ", "") for c in df.columns]
 
-    # Standardize column names to snake_case
-    df.columns = [c.lower() for c in df.columns]
-
-    # Convert numeric columns and fill missing with mean
+    # Convert numeric columns
     numeric_cols = ['grossapproval', 'sbaguaranteedapproval', 'terminmonths', 'initialinterestrate', 'jobsupported']
     for col in numeric_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
-            df[col] = df[col].fillna(df[col].mean())
 
-    # Drop rows with critical missing values
-    df = df.dropna(subset=['grossapproval', 'sbaguaranteedapproval'])
+    # Drop invalid rows
+    df = df.dropna(subset=['grossapproval'])
 
-    # Convert date columns
+    # Date Handling
     date_cols = ['approvaldate', 'firstdisbursementdate', 'paidinfulldate', 'chargeoffdate']
     for col in date_cols:
         if col in df.columns:
             df[col] = pd.to_datetime(df[col], errors='coerce')
 
-    # Derived metric: SBA loan guarantee ratio
-    df['sba_ratio'] = df['sbaguaranteedapproval'] / df['grossapproval']
+    # Ensure Approval Fiscal Year is a string for merging
+    if 'approvalfiscalyear' in df.columns:
+        df['approvalfy'] = df['approvalfiscalyear'].astype(str)
+    
+    # Map State to FIPS immediately for later merging
+    if 'projectstate' in df.columns:
+        df['state_fips'] = df['projectstate'].map(STATE_TO_FIPS)
+
+    # Derived metric: Risk/Guarantee ratio
+    if 'sbaguaranteedapproval' in df.columns and 'grossapproval' in df.columns:
+        df['sba_ratio'] = df['sbaguaranteedapproval'] / df['grossapproval']
 
     return df
 
-
 # -------------------------------
-# BDS Cleaning
+# 2. FIXED BDS FETCHER (Chunked by Age)
 # -------------------------------
-def clean_bds(df):
-    print("Cleaning BDS data...")
-    df.columns = [c.lower() for c in df.columns]
-    numeric_cols = ['emp', 'firm', 'estab']
-    for col in numeric_cols:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-        df[col] = df[col].fillna(df[col].mean()).astype(int)
-    return df
-
-
-# -------------------------------
-# CBP Cleaning
-# -------------------------------
-def clean_cbp(df):
-    print("Cleaning CBP data...")
-    df.columns = [c.lower() for c in df.columns]
-    numeric_cols = ['emp', 'estab', 'payann', 'year']
-    for col in numeric_cols:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-        df[col] = df[col].fillna(df[col].mean()).astype(int)
-    return df
-
-
-# -------------------------------
-# FRED Cleaning
-# -------------------------------
-def clean_fred(df):
-    print("Cleaning FRED data...")
-    df.columns = [c.lower() for c in df.columns]
-    df['value'] = pd.to_numeric(df['value'], errors='coerce')
-    df['value'] = df['value'].fillna(df['value'].mean())
-    df['date'] = pd.to_datetime(df['date'], errors='coerce')
-    return df
-
-
-# -------------------------------
-# BDS Fetcher
-# -------------------------------
-def fetch_bds_naics(naics="72", start_year=1978, end_year=2022):
+def fetch_bds_all_sectors(start_year, end_year):
+    print(f"Fetching BDS data for years {start_year}-{end_year}...")
     all_records = []
+    
+    # We only need ages 0 through 5 for your survival analysis.
+    # 010 = <1 Year (Startups)
+    # 020 = 1 Year
+    # 030 = 2 Years
+    # 040 = 3 Years
+    # 050 = 4 Years
+    # 060 = 5 Years
+    # Splitting the request by Age prevents the 2020 Server Crash.
+    target_ages = ['010', '020', '030', '040', '050', '060']
     for year in range(start_year, end_year + 1):
-        url = "https://api.census.gov/data/timeseries/bds"
-        params = {
-            "get": "YEAR,EMP,FIRM,ESTAB",
-            "for": "us:1",
-            "NAICS": naics,
-            "time": year
-        }
-        r = requests.get(url, params=params)
-        if r.status_code != 200 or r.text.startswith("error"):
-            print(f"Skipping year {year}: {r.text[:100]}")
-            continue
-        try:
-            data = r.json()
-        except:
-            print(f"Skipping year {year}: not JSON")
-            continue
-        df = pd.DataFrame(data[1:], columns=data[0])
-        all_records.append(df)
+        for age_code in target_ages:
+            url = "https://api.census.gov/data/timeseries/bds"
+            
+            params = {
+                "get": "NAICS,YEAR,FIRM,ESTAB,JOB_DESTRUCTION_RATE,FAGE",
+                "for": "us:1",
+                "NAICS": "*",      # All Industries
+                "FAGE": age_code,  # Single Age Group (Prevents Timeout)
+                "YEAR": year,
+                "key": CENSUS_API_KEY
+            }
+            
+            try:
+                r = requests.get(url, params=params, timeout=10)
+                if r.status_code == 200:
+                    try:
+                        data = r.json()
+                        # Fix Duplicate Columns (e.g., NAICS appears twice)
+                        # We extract headers and data, then normalize
+                        headers = data[0]
+                        rows = data[1:]
+                        df = pd.DataFrame(rows, columns=headers)
+                        
+                        # Remove duplicate columns if API returns them
+                        df = df.loc[:, ~df.columns.duplicated()]
+                        
+                        all_records.append(df)
+                    except ValueError:
+                        print(f"  Error {year} (Age {age_code}): Non-JSON response.")
+                elif r.status_code == 204:
+                    # 204 means data not available for this specific slice
+                    pass
+                else:
+                    print(f"  Failed {year} (Age {age_code}): {r.status_code}")
+                    
+            except Exception as e:
+                print(f"  Connection Error {year}: {e}")
+
     if not all_records:
-        return pd.DataFrame()
+        cols = ['naics', 'year', 'firm', 'estab', 'job_destruction_rate', 'fage']
+        return pd.DataFrame(columns=cols)
+
     bds_df = pd.concat(all_records, ignore_index=True)
-    return clean_bds(bds_df)
+    bds_df.columns = [c.lower() for c in bds_df.columns]
+    
+    # Numeric Cleaning
+    cols_to_numeric = ['firm', 'estab', 'job_destruction_rate']
+    for c in cols_to_numeric:
+        if c in bds_df.columns:
+            bds_df[c] = pd.to_numeric(bds_df[c], errors='coerce').fillna(0)
+    
+    if 'year' in bds_df.columns:
+        bds_df['year'] = bds_df['year'].astype(str)
+            
+    print(f"  > Successfully fetched {len(bds_df)} BDS rows.")
+    return bds_df
+# -------------------------------
+# 3. CBP FETCHER (Market Density)
+# -------------------------------
+def fetch_cbp_dynamic(start_year, end_year):
+    print(f"Fetching CBP data for years {start_year}-{end_year}...")
+    all_cbp_data = []
+    
+    for year in range(start_year, end_year + 1):
+        url = f"https://api.census.gov/data/{year}/cbp"
+        params = {
+            "get": "EMP,ESTAB,PAYANN",
+            "for": "state:*",
+            "key": CENSUS_API_KEY
+        }
+        try:
+            r = requests.get(url, params=params, timeout=10)
+            if r.status_code == 200:
+                data = r.json()
+                df = pd.DataFrame(data[1:], columns=data[0])
+                df["year"] = str(year)
+                all_cbp_data.append(df)
+        except Exception:
+            pass # Skip missing years
+
+    if not all_cbp_data:
+        return pd.DataFrame(columns=['emp', 'estab', 'payann', 'year', 'state'])
+    
+    full_cbp_df = pd.concat(all_cbp_data, ignore_index=True)
+    full_cbp_df.columns = [c.lower() for c in full_cbp_df.columns]
+    
+    # Type conversion
+    if 'year' in full_cbp_df.columns:
+        full_cbp_df['year'] = full_cbp_df['year'].astype(str)
+    if 'state' in full_cbp_df.columns:
+        full_cbp_df['state'] = full_cbp_df['state'].astype(str)
+
+    numeric_cols = ['emp', 'estab', 'payann']
+    for col in numeric_cols:
+        if col in full_cbp_df.columns:
+            full_cbp_df[col] = pd.to_numeric(full_cbp_df[col], errors='coerce').fillna(0)
+        
+    return full_cbp_df
 
 # -------------------------------
-# CBP Fetcher
+# 4. FRED FETCHER (Macro Drivers)
 # -------------------------------
-def fetch_cbp(year=2022, state="06"):
-    url = f"https://api.census.gov/data/{year}/cbp"
-    params = {
-        "get": "EMP,ESTAB,PAYANN,NAICS2017",
-        "for": "county:*",
-        "in": f"state:{state}"
-    }
-    r = requests.get(url, params=params)
-    data = r.json()
-    df = pd.DataFrame(data[1:], columns=data[0])
-    df["year"] = year
-    return clean_cbp(df)
-
-# -------------------------------
-# FRED Fetcher
-# -------------------------------
-def fetch_fred_series(series_id, api_key, limit=1000):
+def fetch_fred_series(series_id, api_key):
     url = "https://api.stlouisfed.org/fred/series/observations"
     params = {
         "series_id": series_id,
         "api_key": api_key,
         "file_type": "json",
-        "limit": limit
+        "limit": 10000 
     }
-    r = requests.get(url, params=params)
-    data = r.json()
-    df = pd.DataFrame(data["observations"])
-    return clean_fred(df)
-
+    try:
+        r = requests.get(url, params=params)
+        data = r.json()
+        if "observations" not in data:
+            return pd.DataFrame()
+            
+        df = pd.DataFrame(data["observations"])
+        df['value'] = pd.to_numeric(df['value'], errors='coerce')
+        df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        df['year_str'] = df['date'].dt.year.astype(str)
+        
+        # Average to yearly level
+        df_yearly = df.groupby('year_str')['value'].mean().reset_index()
+        df_yearly.rename(columns={'value': f'fred_{series_id.lower()}'}, inplace=True)
+        return df_yearly
+    except Exception:
+        return pd.DataFrame()
+# -------------------------------
+# 5. MASTER MERGE
+# -------------------------------
+# -------------------------------
+# 5. MASTER MERGE (Type-Safe Version)
+# -------------------------------
 def merge_datasets(sba_df, bds_df, cbp_df, fred_df):
-    print("Merging datasets into analysis-ready DataFrame...")
+    print("Merging datasets...")
 
-    # Ensure key columns are the same type
-    sba_df['approvalfy'] = sba_df['approvalfy'].astype(str)
-    bds_df['year'] = bds_df['year'].astype(str)
-    cbp_df['year'] = cbp_df['year'].astype(str)
+    # --- SAFETY FIX: FORCE STRING TYPES ---
+    # We explicitly convert all join keys to strings to prevent "int64 vs object" errors.
+    
+    # 1. SBA Keys
+    sba_df['approvalfy'] = sba_df['approvalfy'].astype(str).str.replace(".0", "", regex=False)
+    if 'projectstate' in sba_df.columns:
+         # Ensure State FIPS is string (e.g., "06" not 6)
+        sba_df['state_fips'] = sba_df['projectstate'].map(STATE_TO_FIPS).astype(str)
 
-    # Merge SBA → BDS on fiscal year
-    merged_df = sba_df.merge(
+    # 2. BDS Keys
+    if 'year' in bds_df.columns:
+        bds_df['year'] = bds_df['year'].astype(str)
+    
+    # 3. CBP Keys
+    if 'year' in cbp_df.columns:
+        cbp_df['year'] = cbp_df['year'].astype(str)
+    if 'state' in cbp_df.columns:
+        cbp_df['state'] = cbp_df['state'].astype(str)
+
+    # 4. FRED Keys
+    if 'year_str' in fred_df.columns:
+        fred_df['year_str'] = fred_df['year_str'].astype(str)
+    # -------------------------------------
+
+    # A. SBA -> BDS (Survival Context)
+    # Match on Year and 2-Digit Sector Code
+    if 'naicscode' in sba_df.columns:
+        sba_df['naics_sector'] = sba_df['naicscode'].astype(str).str[:2]
+    
+    merged = sba_df.merge(
         bds_df,
-        left_on='approvalfy',
-        right_on='year',
+        left_on=['approvalfy', 'naics_sector'],
+        right_on=['year', 'naics'],
         how='left',
         suffixes=('_sba', '_bds')
     )
-
-    # Merge CBP on year + state
-    merged_df = merged_df.merge(
+    
+    # B. -> CBP (Local Market Density)
+    merged = merged.merge(
         cbp_df,
-        left_on=['approvalfy', 'projectstate'],
+        left_on=['approvalfy', 'state_fips'],
         right_on=['year', 'state'],
         how='left',
         suffixes=('', '_cbp')
     )
 
-    # Merge FRED on year from approvaldate
-    merged_df['approval_year'] = merged_df['approvaldate'].dt.year.astype(str)
-    fred_df['year'] = fred_df['date'].dt.year.astype(str)
-    merged_df = merged_df.merge(
-        fred_df[['year','value']],
-        left_on='approval_year',
-        right_on='year',
-        how='left',
-        suffixes=('', '_cpi')
+    # C. -> FRED (Macro Economy)
+    merged = merged.merge(
+        fred_df,
+        left_on='approvalfy',
+        right_on='year_str',
+        how='left'
     )
 
-    # -------------------------------
-    # Fill missing numeric columns with mean
-    # -------------------------------
-    numeric_cols = merged_df.select_dtypes(include=['float64', 'int64']).columns
-    for col in numeric_cols:
-        merged_df[col] = merged_df[col].fillna(merged_df[col].mean())
-
-    # Optionally: drop temporary columns
-    merged_df.drop(columns=['approval_year', 'year'], inplace=True, errors='ignore')
-
-    print("Merged dataset ready. Missing numeric values filled with column mean.")
-    return merged_df
-
+    print(f"Merge Complete. Final dataset size: {len(merged)} rows.")
+    return merged
 
 # -------------------------------
-# Main pipeline
+# MAIN EXECUTION (Last 5 Years Only)
 # -------------------------------
 if __name__ == "__main__":
+    
+    # 1. DEFINE SCOPE (2020 - 2024)
+    min_year = 2020
+    max_year = 2024
+    print(f"--- Starting Pipeline for {min_year}-{max_year} ---")
 
-    # Clear old tables
-    with engine.begin() as conn:
-        conn.execute(text("DROP TABLE IF EXISTS sba_7a_loans_cleaned;"))
-        conn.execute(text("DROP TABLE IF EXISTS bds_cleaned;"))
-        conn.execute(text("DROP TABLE IF EXISTS cbp_cleaned;"))
-        conn.execute(text("DROP TABLE IF EXISTS fred_cleaned;"))
-        conn.execute(text("DROP TABLE IF EXISTS merged_analysis_ready;"))
-        conn.execute(text("DROP TABLE IF EXISTS sba_bds_cbp_fred_merged;"))
+    # 2. LOAD ONLY RELEVANT SBA DATA
+    # We only need the file covering 2020-Present to save time/memory
+    relevant_files = [
+        "foia-7a-fy2020-present-asof-250930_sample.csv"
+    ]
+    
+    sba_df = load_sba_7a_sample(relevant_files, sample_size=5000) # Increased sample size
+    
+    if not sba_df.empty:
+        sba_df = clean_sba(sba_df)
+        
+        # Filter SBA data to strictly the requested 5-year window
+        # (The CSV might contain 2025 data, or we might have stray 2019 data)
+        sba_df = sba_df[
+            (sba_df['approvalfy'].astype(int) >= min_year) & 
+            (sba_df['approvalfy'].astype(int) <= max_year)
+        ]
+        print(f"Filtered SBA Data to {min_year}-{max_year}: {len(sba_df)} loans.")
 
+        # 3. FETCH CONTEXT DATA (Last 5 Years)
+        # Note: BDS data lags significantly (2022/23 might be latest available).
+        # The fetcher handles missing years gracefully.
+        bds_df = fetch_bds_all_sectors(min_year, max_year)
+        cbp_df = fetch_cbp_dynamic(min_year, max_year)
+        
+        # 4. FETCH MACRO DRIVERS (FRED)
+        fred_api_key = "3290178b9dfef23c54c6ddbe214b5edb" # Your Key
+        print("Fetching Macro Drivers (Hazard Risks)...")
+        
+        # A. Inflation
+        fred_cpi = fetch_fred_series("CPIAUCSL", api_key=fred_api_key)
+        # B. Interest Rates (Cost of Capital)
+        fred_rates = fetch_fred_series("DGS10", api_key=fred_api_key)
+        # C. Unemployment
+        fred_unemp = fetch_fred_series("UNRATE", api_key=fred_api_key)
 
-    # Load and clean datasets
-    sba_df = load_sba_7a_sample(csv_files)
-    sba_df = clean_sba(sba_df)
+        # Merge FRED data
+        fred_combined = fred_cpi.merge(fred_rates, on='year_str', how='outer') \
+                                .merge(fred_unemp, on='year_str', how='outer')
+        
+        # 5. MERGE EVERYTHING
+        final_df = merge_datasets(sba_df, bds_df, cbp_df, fred_combined)
 
-    bds_df = fetch_bds_naics(naics="72", start_year=1978, end_year=2022)
-    cbp_df = fetch_cbp(year=2022, state="06")
-    fred_api_key = "3290178b9dfef23c54c6ddbe214b5edb"
-    fred_df = fetch_fred_series("CPIAUCSL", api_key=fred_api_key)
-
-    # Merge all datasets
-    merged_df = merge_datasets(sba_df, bds_df, cbp_df, fred_df)
-
-    # Preview merged dataset
-    print("\n--- Merged dataset preview ---")
-    print(merged_df.head(10))
-    print("\nColumns:", merged_df.columns.tolist())
-    print("Total rows:", len(merged_df))
-
-    # Save merged dataset to PostgreSQL
-    with engine.begin() as conn:
-        merged_df.to_sql("merged_analysis_ready", conn, if_exists="replace", index=False)
-
-    # Save to CSV for team members
-    merged_csv_path = "merged_analysis_ready_dataset.csv"
-    merged_df.to_csv(merged_csv_path, index=False)
-    print(f"Merged dataset saved to '{merged_csv_path}' and PostgreSQL!")
+        # 6. SAVE TO DB & CSV
+        if engine:
+            try:
+                final_df.to_sql("sba_analysis_dataset", engine, if_exists="replace", index=False)
+                print("Successfully wrote to PostgreSQL table 'sba_analysis_dataset'")
+            except Exception as e:
+                print(f"DB Write Failed: {e}")
+        
+        final_df.to_csv("sba_analysis_dataset_5yr.csv", index=False)
+        print("Successfully saved 'sba_analysis_dataset_5yr.csv'")
+        
+    else:
+        print("No SBA data loaded. Check that 'foia-7a-fy2020-present...' exists.")
