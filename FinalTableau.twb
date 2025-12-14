@@ -1,0 +1,1159 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20253.25.1117.1115                               -->
+<workbook original-version='18.1' source-build='2025.3.0 (20253.25.1117.1115)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <AnimationOnByDefault />
+    <MarkAnimation />
+    <ObjectModelEncapsulateLegacy />
+    <ObjectModelTableType />
+    <SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='sba_analysis_dataset (postgres)' inline='true' name='federated.1jdhew30e5mpav13qfgwk08u88rf' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='database-1.c9a0kamakmmd.us-east-2.rds.amazonaws.com' name='postgres.0nzmcln0pcujfe1aunuy20joytjh'>
+            <connection authentication='username-password' class='postgres' dbname='postgres' one-time-sql='' port='5432' server='database-1.c9a0kamakmmd.us-east-2.rds.amazonaws.com' username='postgres' />
+          </named-connection>
+        </named-connections>
+        <relation connection='postgres.0nzmcln0pcujfe1aunuy20joytjh' name='sba_analysis_dataset' table='[public].[sba_analysis_dataset]' type='table' />
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>asofdate</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[asofdate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>asofdate</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>program</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[program]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>program</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrname</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrname]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>borrname</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrstreet</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrstreet]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>borrstreet</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrcity</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrcity]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>borrcity</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrstate</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrstate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>borrstate</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrzip</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[borrzip]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>borrzip</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>locationid</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[locationid]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>locationid</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankname</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[bankname]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankname</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankfdicnumber</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[bankfdicnumber]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankfdicnumber</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankncuanumber</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[bankncuanumber]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankncuanumber</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankstreet</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[bankstreet]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankstreet</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankcity</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[bankcity]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankcity</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankstate</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[bankstate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankstate</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>bankzip</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[bankzip]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>bankzip</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>grossapproval</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[grossapproval]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>grossapproval</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>sbaguaranteedapproval</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[sbaguaranteedapproval]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>sbaguaranteedapproval</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>approvaldate</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[approvaldate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>approvaldate</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>approvalfy</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[approvalfy]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>approvalfy</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>firstdisbursementdate</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[firstdisbursementdate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>firstdisbursementdate</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>processingmethod</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[processingmethod]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>processingmethod</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>subprogram</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[subprogram]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>subprogram</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>initialinterestrate</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[initialinterestrate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>initialinterestrate</remote-alias>
+            <ordinal>23</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>fixedorvariableinterestrate</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[fixedorvariableinterestrate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>fixedorvariableinterestrate</remote-alias>
+            <ordinal>24</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>terminmonths</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[terminmonths]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>terminmonths</remote-alias>
+            <ordinal>25</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>naicscode</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[naicscode]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>naicscode</remote-alias>
+            <ordinal>26</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>naicsdescription</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[naicsdescription]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>naicsdescription</remote-alias>
+            <ordinal>27</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>franchisecode</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[franchisecode]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>franchisecode</remote-alias>
+            <ordinal>28</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>franchisename</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[franchisename]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>franchisename</remote-alias>
+            <ordinal>29</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>projectcounty</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[projectcounty]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>projectcounty</remote-alias>
+            <ordinal>30</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>projectstate</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[projectstate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>projectstate</remote-alias>
+            <ordinal>31</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>sbadistrictoffice</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[sbadistrictoffice]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>sbadistrictoffice</remote-alias>
+            <ordinal>32</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>congressionaldistrict</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[congressionaldistrict]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>congressionaldistrict</remote-alias>
+            <ordinal>33</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>businesstype</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[businesstype]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>businesstype</remote-alias>
+            <ordinal>34</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>businessage</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[businessage]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>businessage</remote-alias>
+            <ordinal>35</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>loanstatus</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[loanstatus]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>loanstatus</remote-alias>
+            <ordinal>36</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>paidinfulldate</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[paidinfulldate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>paidinfulldate</remote-alias>
+            <ordinal>37</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>chargeoffdate</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[chargeoffdate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>chargeoffdate</remote-alias>
+            <ordinal>38</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>grosschargeoffamount</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[grosschargeoffamount]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>grosschargeoffamount</remote-alias>
+            <ordinal>39</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>revolverstatus</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[revolverstatus]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>revolverstatus</remote-alias>
+            <ordinal>40</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>jobssupported</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[jobssupported]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>jobssupported</remote-alias>
+            <ordinal>41</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>collateralind</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[collateralind]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>collateralind</remote-alias>
+            <ordinal>42</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>soldsecondmarketind</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[soldsecondmarketind]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>soldsecondmarketind</remote-alias>
+            <ordinal>43</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>state_fips</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[state_fips]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>state_fips</remote-alias>
+            <ordinal>44</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>sba_ratio</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[sba_ratio]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>sba_ratio</remote-alias>
+            <ordinal>45</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>naics_sector</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[naics_sector]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>naics_sector</remote-alias>
+            <ordinal>46</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>naics</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[naics]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>naics</remote-alias>
+            <ordinal>47</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[year]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>year</remote-alias>
+            <ordinal>48</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>firm</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[firm]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>firm</remote-alias>
+            <ordinal>49</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>estab</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[estab]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>estab</remote-alias>
+            <ordinal>50</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>job_destruction_rate</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[job_destruction_rate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>job_destruction_rate</remote-alias>
+            <ordinal>51</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>fage</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[fage]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>fage</remote-alias>
+            <ordinal>52</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>us</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[us]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>us</remote-alias>
+            <ordinal>53</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>emp</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[emp]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>emp</remote-alias>
+            <ordinal>54</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>estab_cbp</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[estab_cbp]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>estab_cbp</remote-alias>
+            <ordinal>55</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>payann</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[payann]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>payann</remote-alias>
+            <ordinal>56</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>state</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[state]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>state</remote-alias>
+            <ordinal>57</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year_cbp</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[year_cbp]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>year_cbp</remote-alias>
+            <ordinal>58</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year_str</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[year_str]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>year_str</remote-alias>
+            <ordinal>59</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>2147483647</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>fred_cpiaucsl</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[fred_cpiaucsl]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>fred_cpiaucsl</remote-alias>
+            <ordinal>60</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>fred_dgs10</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[fred_dgs10]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>fred_dgs10</remote-alias>
+            <ordinal>61</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>fred_unrate</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[fred_unrate]</local-name>
+            <parent-name>[sba_analysis_dataset]</parent-name>
+            <remote-alias>fred_unrate</remote-alias>
+            <ordinal>62</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <object-id>[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='sba_analysis_dataset' datatype='table' name='[__tableau_internal_object_id__].[sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82]' role='measure' type='quantitative' />
+      <column caption='Approvaldate' datatype='datetime' name='[approvaldate]' role='dimension' type='ordinal' />
+      <column caption='Approvalfy' datatype='string' name='[approvalfy]' role='dimension' type='nominal' />
+      <column caption='Asofdate' datatype='string' name='[asofdate]' role='dimension' type='nominal' />
+      <column caption='Bankcity' datatype='string' name='[bankcity]' role='dimension' type='nominal' />
+      <column caption='Bankfdicnumber' datatype='real' name='[bankfdicnumber]' role='measure' type='quantitative' />
+      <column caption='Bankname' datatype='string' name='[bankname]' role='dimension' type='nominal' />
+      <column caption='Bankncuanumber' datatype='real' name='[bankncuanumber]' role='measure' type='quantitative' />
+      <column caption='Bankstate' datatype='string' name='[bankstate]' role='dimension' type='nominal' />
+      <column caption='Bankstreet' datatype='string' name='[bankstreet]' role='dimension' type='nominal' />
+      <column caption='Bankzip' datatype='real' name='[bankzip]' role='measure' type='quantitative' />
+      <column caption='Borrcity' datatype='string' name='[borrcity]' role='dimension' type='nominal' />
+      <column caption='Borrname' datatype='string' name='[borrname]' role='dimension' type='nominal' />
+      <column caption='Borrstate' datatype='string' name='[borrstate]' role='dimension' type='nominal' />
+      <column caption='Borrstreet' datatype='string' name='[borrstreet]' role='dimension' type='nominal' />
+      <column caption='Borrzip' datatype='integer' name='[borrzip]' role='measure' type='quantitative' />
+      <column caption='Businessage' datatype='string' name='[businessage]' role='dimension' type='nominal' />
+      <column caption='Businesstype' datatype='string' name='[businesstype]' role='dimension' type='nominal' />
+      <column caption='Chargeoffdate' datatype='datetime' name='[chargeoffdate]' role='dimension' type='ordinal' />
+      <column caption='Collateralind' datatype='string' name='[collateralind]' role='dimension' type='nominal' />
+      <column caption='Congressionaldistrict' datatype='real' name='[congressionaldistrict]' role='measure' type='quantitative' />
+      <column caption='Emp' datatype='real' name='[emp]' role='measure' type='quantitative' />
+      <column caption='Estab' datatype='real' name='[estab]' role='measure' type='quantitative' />
+      <column caption='Estab Cbp' datatype='real' name='[estab_cbp]' role='measure' type='quantitative' />
+      <column caption='Fage' datatype='string' name='[fage]' role='dimension' type='nominal' />
+      <column caption='Firm' datatype='real' name='[firm]' role='measure' type='quantitative' />
+      <column caption='Firstdisbursementdate' datatype='datetime' name='[firstdisbursementdate]' role='dimension' type='ordinal' />
+      <column caption='Fixedorvariableinterestrate' datatype='string' name='[fixedorvariableinterestrate]' role='dimension' type='nominal' />
+      <column caption='Franchisecode' datatype='string' name='[franchisecode]' role='dimension' type='nominal' />
+      <column caption='Franchisename' datatype='string' name='[franchisename]' role='dimension' type='nominal' />
+      <column caption='Fred Cpiaucsl' datatype='real' name='[fred_cpiaucsl]' role='measure' type='quantitative' />
+      <column caption='Fred Dgs10' datatype='real' name='[fred_dgs10]' role='measure' type='quantitative' />
+      <column caption='Fred Unrate' datatype='real' name='[fred_unrate]' role='measure' type='quantitative' />
+      <column caption='Grossapproval' datatype='real' name='[grossapproval]' role='measure' type='quantitative' />
+      <column caption='Grosschargeoffamount' datatype='real' name='[grosschargeoffamount]' role='measure' type='quantitative' />
+      <column caption='Initialinterestrate' datatype='real' name='[initialinterestrate]' role='measure' type='quantitative' />
+      <column caption='Job Destruction Rate' datatype='real' name='[job_destruction_rate]' role='measure' type='quantitative' />
+      <column caption='Jobssupported' datatype='real' name='[jobssupported]' role='measure' type='quantitative' />
+      <column caption='Loanstatus' datatype='string' name='[loanstatus]' role='dimension' type='nominal' />
+      <column caption='Locationid' datatype='real' name='[locationid]' role='measure' type='quantitative' />
+      <column caption='Naics' datatype='string' name='[naics]' role='dimension' type='nominal' />
+      <column caption='Naics Sector' datatype='string' name='[naics_sector]' role='dimension' type='nominal' />
+      <column caption='Naicscode' datatype='integer' name='[naicscode]' role='measure' type='quantitative' />
+      <column caption='Naicsdescription' datatype='string' name='[naicsdescription]' role='dimension' type='nominal' />
+      <column caption='Paidinfulldate' datatype='datetime' name='[paidinfulldate]' role='dimension' type='ordinal' />
+      <column caption='Payann' datatype='real' name='[payann]' role='measure' type='quantitative' />
+      <column caption='Processingmethod' datatype='string' name='[processingmethod]' role='dimension' type='nominal' />
+      <column caption='Program' datatype='string' name='[program]' role='dimension' type='nominal' />
+      <column caption='Projectcounty' datatype='string' name='[projectcounty]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
+      <column caption='Projectstate' datatype='string' name='[projectstate]' role='dimension' type='nominal' />
+      <column caption='Revolverstatus' datatype='integer' name='[revolverstatus]' role='measure' type='quantitative' />
+      <column caption='Sba Ratio' datatype='real' name='[sba_ratio]' role='measure' type='quantitative' />
+      <column caption='Sbadistrictoffice' datatype='string' name='[sbadistrictoffice]' role='dimension' type='nominal' />
+      <column caption='Sbaguaranteedapproval' datatype='real' name='[sbaguaranteedapproval]' role='measure' type='quantitative' />
+      <column caption='Soldsecondmarketind' datatype='string' name='[soldsecondmarketind]' role='dimension' type='nominal' />
+      <column caption='State' datatype='string' name='[state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+      <column caption='State Fips' datatype='string' name='[state_fips]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+      <column caption='Subprogram' datatype='string' name='[subprogram]' role='dimension' type='nominal' />
+      <column caption='Terminmonths' datatype='integer' name='[terminmonths]' role='measure' type='quantitative' />
+      <column caption='Us' datatype='string' name='[us]' role='dimension' type='nominal' />
+      <column caption='Year' datatype='string' name='[year]' role='dimension' type='nominal' />
+      <column caption='Year Cbp' datatype='string' name='[year_cbp]' role='dimension' type='nominal' />
+      <column caption='Year Str' datatype='string' name='[year_str]' role='dimension' type='nominal' />
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+      <object-graph>
+        <objects>
+          <object caption='sba_analysis_dataset' id='sba_analysis_dataset_107DBF722F9F4D48AF33BD131D2AFF82'>
+            <properties context=''>
+              <relation connection='postgres.0nzmcln0pcujfe1aunuy20joytjh' name='sba_analysis_dataset' table='[public].[sba_analysis_dataset]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Sheet 1'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{5A4631BD-CBE6-4D1C-BAD3-BC860BCD9C75}' />
+    </worksheet>
+  </worksheets>
+  <windows source-height='30'>
+    <window class='worksheet' maximized='true' name='Sheet 1'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{7239D1AF-8067-4AFF-8764-F1E23A29A912}' />
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='384' name='Sheet 1' width='384'>
+      iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAYAAACkx7W/AAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAAFXUlEQVR4nO3VMQEAIAzAMMC/5yFjRxMF/XpnZg4AOW87AIAdBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEfFxoG/IiMv0YAAAAASUVORK5CYII=
+    </thumbnail>
+  </thumbnails>
+</workbook>
