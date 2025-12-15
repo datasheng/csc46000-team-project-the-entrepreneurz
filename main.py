@@ -46,7 +46,7 @@ csv_files = [
     "foia-7a-fy1991-fy1999-asof-250930_sample.csv",
     "foia-7a-fy2000-fy2009-asof-250930_sample.csv",
     "foia-7a-fy2010-fy2019-asof-250930_sample.csv",
-    "foia-7a-fy2020-present-asof-250930_sample.csv"
+    "foia-7a-fy2020-present-asof-250930.csv"
 ]
 
 def load_sba_7a_sample(csv_files, sample_size=500):
@@ -55,7 +55,7 @@ def load_sba_7a_sample(csv_files, sample_size=500):
         if os.path.exists(file):
             print(f"Loading first {sample_size} rows from {file}...")
             # encoding='latin1' is often safer for government CSVs
-            df = pd.read_csv(file, nrows=sample_size, encoding='latin1', low_memory=False)
+            df = pd.read_csv(file, encoding='latin1', low_memory=False)
             dfs.append(df)
         else:
             print(f"Warning: File {file} not found. Skipping.")
@@ -344,24 +344,24 @@ if __name__ == "__main__":
         cbp_df = fetch_cbp_dynamic(min_year, max_year)
         
         # 4. FETCH MACRO DRIVERS (FRED)
-        fred_api_key = "3290178b9dfef23c54c6ddbe214b5edb" # Your Key
         print("Fetching Macro Drivers (Hazard Risks)...")
         
         # A. Inflation
-        fred_cpi = fetch_fred_series("CPIAUCSL", api_key=fred_api_key)
+        fred_cpi = fetch_fred_series("CPIAUCSL", api_key=FRED_API_KEY)
         # B. Interest Rates (Cost of Capital)
-        fred_rates = fetch_fred_series("DGS10", api_key=fred_api_key)
+        fred_rates = fetch_fred_series("DGS10", api_key=FRED_API_KEY)
         # C. Unemployment
-        fred_unemp = fetch_fred_series("UNRATE", api_key=fred_api_key)
-
+        fred_unemp = fetch_fred_series("UNRATE", api_key=FRED_API_KEY)
         # Merge FRED data
         fred_combined = fred_cpi.merge(fred_rates, on='year_str', how='outer') \
                                 .merge(fred_unemp, on='year_str', how='outer')
         
         # 5. MERGE EVERYTHING
         final_df = merge_datasets(sba_df, bds_df, cbp_df, fred_combined)
-
+        final_df.to_csv("analysis_dataset.csv", index=False)
+        print("Successfully saved 'analysis_dataset.csv'")
         # 6. SAVE TO DB & CSV
+        print("Writing final dataset to PostgreSQL and CSV...")
         if engine:
             try:
                 final_df.to_sql("sba_analysis_dataset", engine, if_exists="replace", index=False)
