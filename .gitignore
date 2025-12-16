@@ -7,4 +7,4 @@ sba_analysis_dataset_5yr.csv
 !analysis_results/*.csv
 
 # Analysis results visualizations (PNG files can be large, exclude them)
-analysis_results/*.png
+!analysis_results/*.png
