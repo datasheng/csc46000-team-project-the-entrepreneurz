@@ -1,0 +1,10 @@
+# Survival probabilities for loans with interest rate < median (6.75%)
+# Generated: 2025-12-15 21:37:31
+# Total observations: 5
+
+time_months,survival_prob,failure_prob,failure_rate_pct,ci_low,ci_high,at_risk,events,censored,hazard_rate,group
+12,1.0,0.0,0.0,1.0,1.0,56077,0,1305,0.0,Low Interest Rate
+24,0.9992,0.0008,0.08,0.9989,0.9994,52379,44,4959,7e-05,Low Interest Rate
+36,0.994,0.006,0.6,0.9933,0.9947,46712,299,10371,0.000455,Low Interest Rate
+48,0.9863,0.0137,1.37,0.9852,0.9874,27461,588,29333,0.000877,Low Interest Rate
+60,0.9795,0.0205,2.05,0.9776,0.9812,8296,689,56693,0.001015,Low Interest Rate
