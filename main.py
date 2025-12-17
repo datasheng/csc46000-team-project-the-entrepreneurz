@@ -101,21 +101,14 @@ def clean_sba(df):
     return df
 
 # -------------------------------
-# 2. FIXED BDS FETCHER (Chunked by Age)
+# 2. BDS FETCHER 
 # -------------------------------
 def fetch_bds_all_sectors(start_year, end_year):
     print(f"Fetching BDS data for years {start_year}-{end_year}...")
     all_records = []
     
-    # We only need ages 0 through 5 for your survival analysis.
-    # 010 = <1 Year (Startups)
-    # 020 = 1 Year
-    # 030 = 2 Years
-    # 040 = 3 Years
-    # 050 = 4 Years
-    # 060 = 5 Years
-    # Splitting the request by Age prevents the 2020 Server Crash.
-    target_ages = ['010', '020', '030', '040', '050', '060']
+    # We only need ages 0 through 9 for our survival analysis.
+    target_ages = ['010', '020', '030', '040', '050', '060', '070','080','090' ]
     for year in range(start_year, end_year + 1):
         for age_code in target_ages:
             url = "https://api.census.gov/data/timeseries/bds"
@@ -181,24 +174,52 @@ def fetch_cbp_dynamic(start_year, end_year):
     all_cbp_data = []
     
     for year in range(start_year, end_year + 1):
+        # 1. Determine the correct variable name based on the NAICS vintage
+        if year < 2008:
+            naics_param = "NAICS2002"  # Used for 2002-2007
+        elif year < 2012:
+            naics_param = "NAICS2007"  # Used for 2008-2011
+        elif year < 2017:
+            naics_param = "NAICS2012"  # Used for 2012-2016
+        else:
+            naics_param = "NAICS2017"  # Used for 2017-Present
+        
         url = f"https://api.census.gov/data/{year}/cbp"
+        
+        # We need naics_param to get the code, but we ask for EMP, ESTAB, PAYANN
         params = {
-            "get": "EMP,ESTAB,PAYANN",
+            "get": f"{naics_param},EMP,ESTAB,PAYANN", 
             "for": "state:*",
             "key": CENSUS_API_KEY
         }
+
         try:
-            r = requests.get(url, params=params, timeout=10)
+            r = requests.get(url, params=params, timeout=20)
+            
             if r.status_code == 200:
                 data = r.json()
                 df = pd.DataFrame(data[1:], columns=data[0])
                 df["year"] = str(year)
+                
+                # 2. Rename the dynamic column to a static name 'naics_sector'
+                if naics_param in df.columns:
+                    df.rename(columns={naics_param: 'naics_sector'}, inplace=True)
+                
+                # 3. Filter for 2-digit sectors only
+                # (This keeps the dataset size small and matches your SBA logic)
+                df = df[df['naics_sector'].str.len() == 2]
+                
                 all_cbp_data.append(df)
-        except Exception:
-            pass # Skip missing years
+            else:
+                # Still print warning but don't crash
+                print(f"  Warning {year}: API returned status {r.status_code}")
+                
+        except Exception as e:
+            print(f"  Skipping {year}: {e}")
+            pass 
 
     if not all_cbp_data:
-        return pd.DataFrame(columns=['emp', 'estab', 'payann', 'year', 'state'])
+        return pd.DataFrame(columns=['emp', 'estab', 'payann', 'year', 'state', 'naics_sector'])
     
     full_cbp_df = pd.concat(all_cbp_data, ignore_index=True)
     full_cbp_df.columns = [c.lower() for c in full_cbp_df.columns]
@@ -215,7 +236,6 @@ def fetch_cbp_dynamic(start_year, end_year):
             full_cbp_df[col] = pd.to_numeric(full_cbp_df[col], errors='coerce').fillna(0)
         
     return full_cbp_df
-
 # -------------------------------
 # 4. FRED FETCHER (Macro Drivers)
 # -------------------------------
@@ -291,10 +311,11 @@ def merge_datasets(sba_df, bds_df, cbp_df, fred_df):
     )
     
     # B. -> CBP (Local Market Density)
+# Ensure columns match (e.g. both are strings)
     merged = merged.merge(
         cbp_df,
-        left_on=['approvalfy', 'state_fips'],
-        right_on=['year', 'state'],
+        left_on=['approvalfy', 'state_fips', 'naics_sector'], # Add Sector here
+        right_on=['year', 'state', 'naics_sector'],           # And here
         how='left',
         suffixes=('', '_cbp')
     )
@@ -311,7 +332,7 @@ def merge_datasets(sba_df, bds_df, cbp_df, fred_df):
     return merged
 
 # -------------------------------
-# MAIN EXECUTION (Last 5 Years Only)
+# MAIN EXECUTION
 # -------------------------------
 if __name__ == "__main__":
     
@@ -320,8 +341,7 @@ if __name__ == "__main__":
     max_year = 2025
     print(f"--- Starting Pipeline for {min_year}-{max_year} ---")
 
-    # 2. LOAD ONLY RELEVANT SBA DATA
-    # We only need the file covering 2020-Present to save time/memory
+    # 2. LOAD SBA DATA
     relevant_files = csv_files
     
     sba_df = load_sba_7a_sample(relevant_files, sample_size=5000) # Increased sample size
@@ -329,15 +349,14 @@ if __name__ == "__main__":
     if not sba_df.empty:
         sba_df = clean_sba(sba_df)
         
-        # Filter SBA data to strictly the requested 5-year window
-        # (The CSV might contain 2025 data, or we might have stray 2019 data)
+        # Filter to relevant years
         sba_df = sba_df[
             (sba_df['approvalfy'].astype(int) >= min_year) & 
             (sba_df['approvalfy'].astype(int) <= max_year)
         ]
         print(f"Filtered SBA Data to {min_year}-{max_year}: {len(sba_df)} loans.")
 
-        # 3. FETCH CONTEXT DATA (Last 5 Years)
+        # 3. FETCH CONTEXT DATA
         # Note: BDS data lags significantly (2022/23 might be latest available).
         # The fetcher handles missing years gracefully.
         bds_df = fetch_bds_all_sectors(min_year, max_year)
