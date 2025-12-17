@@ -1,0 +1,10 @@
+# Survival probabilities for loans with SBA guarantee ratio < median (0.750)
+# Generated: 2025-12-15 21:37:32
+# Total observations: 5
+
+time_months,survival_prob,failure_prob,failure_rate_pct,ci_low,ci_high,at_risk,events,censored,hazard_rate,group
+12,1.0,0.0,0.0,1.0,1.0,33699,0,3603,0.0,Low SBA Guarantee
+24,0.9987,0.0013,0.13,0.9982,0.9991,28618,38,8646,0.000111,Low SBA Guarantee
+36,0.9947,0.0053,0.53,0.9936,0.9956,15309,121,21872,0.000452,Low SBA Guarantee
+48,0.9894,0.0106,1.06,0.9875,0.991,6213,176,30913,0.000738,Low SBA Guarantee
+60,0.9824,0.0176,1.76,0.9792,0.9852,3815,209,37093,0.000721,Low SBA Guarantee
