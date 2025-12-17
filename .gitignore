@@ -1,0 +1,11 @@
+.env
+foia-7a-fy2020-present-asof-250930.csv
+sba_analysis_dataset_5yr.csv
+analysis_dataset.csv
+
+# Large CSV data files (exclude large source data files)
+*.csv
+!analysis_results/*.csv
+
+# Analysis results visualizations (PNG files can be large, exclude them)
+analysis_results/*.png
